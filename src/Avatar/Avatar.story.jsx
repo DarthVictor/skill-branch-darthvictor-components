@@ -9,8 +9,7 @@ module.exports = function ({ storiesOf, action }) {
     .add('Standart Avatar', () => (
         <Avatar src={userImageFile}>
         </Avatar>
-    ))
-   
+    ))   
 
     .add('Default Image', () => (
       <Avatar>
@@ -20,5 +19,21 @@ module.exports = function ({ storiesOf, action }) {
     .add('Large Image and Spinner', () => (
       <Avatar src={'https://edmullen.net/test/rc.jpg'}>
       </Avatar>
-    ));
+    ))
+
+    .add('Fallback from wrong src', () => (
+      <Avatar src={'https://no-data.jpg'} onErrorSrc={"https://avatars2.githubusercontent.com/u/2578541?v=3&u=d3c98f7f889e30a133848ca0fd51e2b58bbb9b79&s=400"}>
+      </Avatar>
+    ))
+
+    
+    .add('Square Avatar', () => (
+        <Avatar src={userImageFile} form={'square'}>
+        </Avatar>
+    ))
+    
+    .add('Circle Avatar', () => (
+        <Avatar src={userImageFile} form={'circle'}>
+        </Avatar>
+    ))
 };

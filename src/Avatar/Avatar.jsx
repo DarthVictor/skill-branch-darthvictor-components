@@ -36,7 +36,7 @@ export default class Avatar extends Component {
     src: defaultImageFile,
     onErrorSrc: defaultImageFile,
     size: 128,
-    form: 'square'
+    form: 'default'
   }
 
   static propTypes = {
@@ -47,7 +47,7 @@ export default class Avatar extends Component {
   }
 
   handleImageLoaded(){
-    this.setState({
+    if(!this.state.loadError)this.setState({
       loadError: false,
       loading: false
     })
@@ -73,8 +73,9 @@ export default class Avatar extends Component {
     }
 
     const imgClassNames = classnames({
-      'avatar__img--square': this.props.form == 'circle',
-      'avatar__img--circle': this.props.form == 'square'
+      'avatar__img--square': this.props.form == 'square',
+      'avatar__img--circle': this.props.form == 'circle',
+      'avatar__img': this.props.form != 'circle' && this.props.form != 'square'
     })
 
     return (
@@ -94,7 +95,7 @@ export default class Avatar extends Component {
           <div styleName="sk-circle12 sk-circle"></div>
         </div>}
         <img 
-          styleName="avatar__img" 
+          styleName={imgClassNames}
           src={this.state.loadError ? onErrorSrc: src} 
           width={size} height={size}        
           onLoad={this.handleImageLoaded.bind(this)}

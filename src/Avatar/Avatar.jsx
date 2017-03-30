@@ -1,8 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import importcss from 'importcss';
-import cx from 'classnames';
+import classnames from 'classnames';
 import _ from 'lodash';
 
+import defaultImageFile from './public/default_avatar.png'
+
+const SPINNER_RADIUS = 20
 /**
   Какие основные кейсы приходится решать очень часто, хоть и не в каждом проекте:
   Само собой разумеется, что компонент может
@@ -20,17 +23,83 @@ import _ from 'lodash';
 
 @importcss(require('./Avatar.css'))
 export default class Avatar extends Component {
-  static defaultProps = {
-    bsStyle: 'primary'
+  
+  constructor(){
+    super()
+    this.state = { 
+      loadError: false,
+      loading: true
+    }
   }
-  static propTypes = {
-    bsStyle: PropTypes.string
-  }
-  render() {
-    const { bsStyle } = this.props;
-    return (
-      <div styleName="avatar">
 
+  static defaultProps = {
+    src: defaultImageFile,
+    onErrorSrc: defaultImageFile,
+    size: 128,
+    form: 'square'
+  }
+
+  static propTypes = {
+    src: PropTypes.string,
+    onErrorSrc: PropTypes.string,
+    size: PropTypes.number,
+    form: PropTypes.string
+  }
+
+  handleImageLoaded(){
+    this.setState({
+      loadError: false,
+      loading: false
+    })
+  }
+
+  handleImageErrored(){
+    this.setState({
+      loadError: true,
+      loading: false
+    })
+  }
+
+  render() {
+    const { src, onErrorSrc, size } = this.props;
+    const spinnerStyle = {
+      left: size/2 - SPINNER_RADIUS,
+      bottom: size/2 - SPINNER_RADIUS
+    }
+
+    const frameStyle = {
+      width: size + 'px',
+      height: size + 'px'
+    }
+
+    const imgClassNames = classnames({
+      'avatar__img--square': this.props.form == 'circle',
+      'avatar__img--circle': this.props.form == 'square'
+    })
+
+    return (
+      <div styleName="avatar" style={frameStyle}>        
+        {this.state.loading && <div styleName="sk-fading-circle" style={spinnerStyle}>
+          <div styleName="sk-circle1 sk-circle"></div>
+          <div styleName="sk-circle2 sk-circle"></div>
+          <div styleName="sk-circle3 sk-circle"></div>
+          <div styleName="sk-circle4 sk-circle"></div>
+          <div styleName="sk-circle5 sk-circle"></div>
+          <div styleName="sk-circle6 sk-circle"></div>
+          <div styleName="sk-circle7 sk-circle"></div>
+          <div styleName="sk-circle8 sk-circle"></div>
+          <div styleName="sk-circle9 sk-circle"></div>
+          <div styleName="sk-circle10 sk-circle"></div>
+          <div styleName="sk-circle11 sk-circle"></div>
+          <div styleName="sk-circle12 sk-circle"></div>
+        </div>}
+        <img 
+          styleName="avatar__img" 
+          src={this.state.loadError ? onErrorSrc: src} 
+          width={size} height={size}        
+          onLoad={this.handleImageLoaded.bind(this)}
+          onError={this.handleImageErrored.bind(this)}
+        />
       </div>
     );
   }

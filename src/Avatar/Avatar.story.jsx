@@ -60,7 +60,7 @@ module.exports = ({ storiesOf, action }) => {
         )
     })
 
-    .add('Bage Avatar', () => {
+    .add('Badge Avatar', () => {
         const styleValue = {margin: '20px 0px'}
         return (
             <div>

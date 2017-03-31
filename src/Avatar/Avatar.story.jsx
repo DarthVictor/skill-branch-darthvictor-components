@@ -2,8 +2,11 @@ import React from 'react';
 import Avatar from './Avatar';
 
 import userImageFile from './public/user_avatar.png';
+import badge1_ImageFile from './public/badge_1.png';
+import badge2_ImageFile from './public/badge_2.png';
+import badge3_ImageFile from './public/badge_3.png';
 
-module.exports = function ({ storiesOf, action }) {
+module.exports = ({ storiesOf, action }) => {
   return storiesOf('Avatar', module)
     
     .add('Standart Avatar', () => (
@@ -28,12 +31,53 @@ module.exports = function ({ storiesOf, action }) {
 
     
     .add('Square Avatar', () => (
-        <Avatar src={userImageFile} form={'square'}>
+        <Avatar src={userImageFile} form='square'>
         </Avatar>
     ))
     
     .add('Circle Avatar', () => (
-        <Avatar src={userImageFile} form={'circle'}>
+        <Avatar src={userImageFile} form='circle'>
         </Avatar>
     ))
+
+    .add('Border Avatar', () => {
+        const styleValue = {marginBottom: '20px'}
+        return (
+            <div>
+              <div style={styleValue}>
+                <Avatar src={userImageFile} form={'square'} border='3px solid red'>
+                </Avatar>
+              </div>
+              <div style={styleValue}>
+                <Avatar src={userImageFile} form={'square'} border={'3px solid green'}>
+                </Avatar>
+              </div>
+              <div style={styleValue}>
+                <Avatar src={userImageFile} form={'square'} border={'3px dashed blue'}>
+                </Avatar>
+              </div>
+            </div>
+        )
+    })
+
+    .add('Bage Avatar', () => {
+        const styleValue = {margin: '20px 0px'}
+        return (
+            <div>
+              <div style={styleValue}>
+                <Avatar src={userImageFile} form={'square'} badgeSrc={badge1_ImageFile}>
+                </Avatar>
+              </div>
+              <div style={styleValue}>
+                <Avatar src={userImageFile} form={'square'} badgeSrc={badge2_ImageFile}>
+                </Avatar>
+              </div>
+              <div style={styleValue}>
+                <Avatar src={userImageFile} form={'square'} badgeSrc={badge3_ImageFile}>
+                </Avatar>
+              </div>
+            </div>
+        )
+    })
+
 };

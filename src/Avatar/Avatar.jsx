@@ -6,6 +6,7 @@ import _ from 'lodash';
 import defaultImageFile from './public/default_avatar.png'
 
 const SPINNER_RADIUS = 20
+const BADGE_RADIUS = 15
 /**
   Какие основные кейсы приходится решать очень часто, хоть и не в каждом проекте:
   Само собой разумеется, что компонент может
@@ -35,15 +36,19 @@ export default class Avatar extends Component {
   static defaultProps = {
     src: defaultImageFile,
     onErrorSrc: defaultImageFile,
+    badgeSrc: null,
     size: 128,
-    form: 'default'
+    form: 'default',
+    border: null
   }
 
   static propTypes = {
     src: PropTypes.string,
     onErrorSrc: PropTypes.string,
+    badgeSrc: PropTypes.string,
     size: PropTypes.number,
-    form: PropTypes.string
+    form: PropTypes.string,
+    border: PropTypes.string
   }
 
   handleImageLoaded(){
@@ -67,6 +72,13 @@ export default class Avatar extends Component {
       bottom: size/2 - SPINNER_RADIUS
     }
 
+    const badgeStyle = {
+      width: BADGE_RADIUS*2,
+      height: BADGE_RADIUS*2,
+      left: size - BADGE_RADIUS,
+      top: - BADGE_RADIUS
+    }
+
     const frameStyle = {
       width: size + 'px',
       height: size + 'px'
@@ -77,7 +89,10 @@ export default class Avatar extends Component {
       'avatar__img--circle': this.props.form == 'circle',
       'avatar__img': this.props.form != 'circle' && this.props.form != 'square'
     })
-
+    const borderStyle = this.props.border ? {
+      border: this.props.border,
+    } : {}
+    const imgStyle = Object.assign({}, borderStyle)
     return (
       <div styleName="avatar" style={frameStyle}>        
         {this.state.loading && <div styleName="sk-fading-circle" style={spinnerStyle}>
@@ -100,7 +115,12 @@ export default class Avatar extends Component {
           width={size} height={size}        
           onLoad={this.handleImageLoaded.bind(this)}
           onError={this.handleImageErrored.bind(this)}
+          style={imgStyle}
         />
+        {this.props.badgeSrc && <img styleName="avatar__badge" 
+          src={this.props.badgeSrc} 
+          style={badgeStyle}
+        />}
       </div>
     );
   }

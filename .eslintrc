@@ -18,13 +18,13 @@
     }
   },
   "rules": {
+    "global-require": "off",
     "no-console": "warn",
     "arrow-body-style": "off",
     "func-names": "warn",
     "no-param-reassign": "warn",
     "react/react-in-jsx-scope": "warn",
     "no-underscore-dangle": "warn",
-    "global-require": "warn",
     "react/prop-types": "warn",
     "react/jsx-first-prop-new-line": "warn",
     "guard-for-in": "off",

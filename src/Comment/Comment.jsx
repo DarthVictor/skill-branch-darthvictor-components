@@ -60,7 +60,7 @@ export class Comment extends Component {
     date: React.PropTypes.instanceOf(Date),
     // ?  REPORT
     // ? редактирование что должно происходить при onEditClick?
-    onEditClick: PropTypes.function
+    onSubmitClick: PropTypes.function
   }
 
   render() { 

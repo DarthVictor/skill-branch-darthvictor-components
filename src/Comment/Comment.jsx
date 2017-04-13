@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import Avatar from '../Avatar'
 import importcss from 'importcss';
 import classnames from 'classnames';
 import _ from 'lodash';
@@ -38,11 +39,14 @@ export class Comment extends Component {
   
   constructor(){
     super()
-    this.state = {}
   }
 
   static defaultProps = {
     
+            onReplyClick: () => {},
+            onLikeClick: () => {},
+            onReport: () => {},
+            onSave: () => {},
   }
 
   static propTypes = {
@@ -54,19 +58,21 @@ export class Comment extends Component {
     // ? images / attachments (?)
     //  ? подумать про упомянания 
     repliesCount: PropTypes.number,
-    onReplyClick: PropTypes.function,
+    onReplyClick: PropTypes.func,
     likesCount: PropTypes.number,
-    onLikeClick: PropTypes.function,
+    onLikeClick: PropTypes.func,
     date: React.PropTypes.instanceOf(Date),
-    // ?  REPORT
+    onReport: PropTypes.func,
     // ? редактирование что должно происходить при onEditClick?
-    onSubmitClick: PropTypes.function
+    onSave: PropTypes.func
   }
 
   render() { 
-        <div styleName="comment"> 
+        console.log(this.props)
+        return (<div styleName="comment"> 
+            <Avatar styleName="comment__avatar" src={this.props.avatarSrc} size={80}> </Avatar>
             {this.props.text}
-        </div>    
+        </div>) 
   }
 }
 

@@ -5,7 +5,6 @@ import userImageFile from './public/user_avatar.png';
 module.exports = ({ storiesOf, action }) => {
     
   return storiesOf('Comment', module)
-    
     .add('Standart', () => {
         const commentProps = {
             userId: 1,
@@ -16,13 +15,13 @@ module.exports = ({ storiesOf, action }) => {
             // ? images / attachments (?)
             //  ? подумать про упомянания 
             repliesCount: 0,
-            onReplyClick: () => console.log('On Reply'),
+            onReplyClick:  action('On Reply'),
             likesCount: 0,
-            onLikeClick: () => console.log('On Like'),
+            onLikeClick: action('On Like'),
             date: new Date,
-            onReport: () => console.log('On Report'),
+            onReport:  action('On Report'),
             // ? редактирование что должно происходить при onEditClick?
-            onSave: () => console.log('On Save'),
+            onSave: action('On Save'),
         }
         return <Comment {...commentProps}></Comment>
     })  

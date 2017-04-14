@@ -51,7 +51,7 @@ export default class StatusButton extends Component {
 
   static propTypes = {
     defaultState: PropTypes.string,
-    onClickPromise: PropTypes.function
+    onClickPromise: PropTypes.func
   }
 
   onButtonClick(e){

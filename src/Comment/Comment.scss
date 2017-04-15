@@ -2,12 +2,12 @@
     width: 100%;
     box-sizing: border-box;
     
-    border: 1px solid lightgray;
-
     display: flex;
     flex-direction: row;
 
     padding: 1em;
+    border: 1px solid lightgray;
+    box-shadow: 0.25em 0.25em 0.125em lightgray;
 
 }
 .comment__right{

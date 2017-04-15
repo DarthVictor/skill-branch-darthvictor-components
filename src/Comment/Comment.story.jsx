@@ -5,12 +5,14 @@ import userImageFile from './public/user_avatar.png';
 module.exports = ({ storiesOf, action }) => {
     
   return storiesOf('Comment', module)
-    .add('Standart', () => {
+    .add('Standart comment', () => {
         const commentProps = {
             userId: 1,
             avatarSrc: userImageFile,
-            userName: 'userName',
-            text: 'PropTypes.string',
+            userName: 'John Doe',
+            text: `
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            `,
             // ? Content
             // ? images / attachments (?)
             //  ? подумать про упомянания 
@@ -18,15 +20,15 @@ module.exports = ({ storiesOf, action }) => {
             onReplyClick:  action('On Reply'),
             likesCount: 0,
             onLikeClick: action('On Like'),
-            date: new Date,
+            date: new Date((new Date).getTime() - 3600*1000),
             onReport:  action('On Report'),
             // ? редактирование что должно происходить при onEditClick?
             onSave: action('On Save'),
         }
         return <Comment {...commentProps}></Comment>
     })  
-    .add('Nothing Form', () => (
-        <CommentForm></CommentForm>
-    ))  
+    // .add('Nothing Form', () => (
+    //     <CommentForm></CommentForm>
+    // ))  
 
 };

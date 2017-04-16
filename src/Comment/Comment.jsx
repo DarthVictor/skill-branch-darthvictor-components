@@ -13,7 +13,11 @@ import FaCheck from 'react-icons/lib/fa/check'
 import TimeAgo from 'react-timeago'
 import ruStrings from 'react-timeago/lib/language-strings/ru'
 import buildFormatter from 'react-timeago/lib/formatters/buildFormatter'
-import RichTextEditor from 'react-rte'
+
+let RichTextEditor
+if (__BROWSER__) { 
+  RichTextEditor = require('react-rte').default 
+}
 
 import Avatar from '../Avatar'
 
@@ -32,11 +36,10 @@ export class Comment extends Component {
   constructor(){
     super()
     this.state = {
-      value: RichTextEditor.createEmptyValue(),
+      value: RichTextEditor ? RichTextEditor.createEmptyValue() : '',
       editMode: false
     }
   }
-
   static defaultProps = {
     
             onReplyClick: () => {},
@@ -71,7 +74,7 @@ export class Comment extends Component {
         }
         else{ // edit text
             this.setState({
-                value: RichTextEditor.createValueFromString(this.props.text, 'html'),
+                value: RichTextEditor ? RichTextEditor.createValueFromString(this.props.text, 'html') : '',
                 editMode: true
             })
         }
@@ -112,7 +115,7 @@ export class Comment extends Component {
           </div>{/*comment__header*/}
 
           <div styleName="comment__body">
-            {!this.state.editMode ? (
+            {!this.state.editMode || !RichTextEditor ? (
               <div styleName="comment__text" dangerouslySetInnerHTML={{__html:this.props.text}}></div>
             ) :  (
               <div styleName="comment__editor">

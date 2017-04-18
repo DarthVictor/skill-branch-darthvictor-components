@@ -12,6 +12,7 @@
 }
 .comment__right{
     display: flex;
+    flex: 1;
     flex-direction: column;    
 }
 .comment__avatar{
@@ -66,13 +67,12 @@
 }
 
 .comment__bottom-toolbar{
+    display: flex;
+    flex-direction: row;
     margin-left: -0.5em;
+    align-items: flex-start;
 }
 
-.edit__button{
-    align-self: right;
-}
-
-.comment-form{
-    
+.edit__button, .create__button{
+    align-self: flex-end;
 }

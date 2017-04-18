@@ -9,6 +9,7 @@ import FaMailReply from 'react-icons/lib/fa/mail-reply'
 import FaBan from 'react-icons/lib/fa/ban'
 import FaEdit from 'react-icons/lib/fa/edit'
 import FaCheck from 'react-icons/lib/fa/check'
+import FaComment from 'react-icons/lib/fa/comment'
 
 import TimeAgo from 'react-timeago'
 import ruStrings from 'react-timeago/lib/language-strings/ru'
@@ -28,6 +29,8 @@ const LIKE_TEXT = 'Нравится'
 const ANSWER_TEXT = 'Ответить'
 const EDIT_TEXT = 'Редактировать'
 const SAVE_TEXT = 'Сохранить'
+const CREATE_TEXT = 'Создать'
+
 const DATE_FORMATTER = buildFormatter(ruStrings)
 
 @importcss(require('./Comment.scss'))
@@ -69,8 +72,8 @@ export class Comment extends Component {
 
   onEditClick(event){
         if(this.state.editMode){ // save new text
-            this.setState(Object.assign({}, this.state, {editMode: false}))
             this.props.onSave(this.state.value.toString('html'))
+            this.setState(Object.assign({}, this.state, {editMode: false}))
         }
         else{ // edit text
             this.setState({
@@ -152,27 +155,77 @@ export class Comment extends Component {
 
 @importcss(require('./Comment.scss'))
 export class CommentForm extends Component {
-  
-  constructor(){
-    super()
-    this.state = {}
-  }
-
-  static defaultProps = {
     
-  }
+    constructor(){
+        super()
+        this.state = {
+            value: RichTextEditor ? RichTextEditor.createEmptyValue() : '',
+        }
+    }
 
-  static propTypes = {
-    userId: PropTypes.number,
-    avatarSrc: PropTypes.string,
-    userName: PropTypes.string,
-    // ? редактирование что должно происходить при onSubmit?
-    onSubmit: PropTypes.function
-  }
+    static defaultProps = {
+      
+    }
 
-  render() { 
-        <div styleName="comment-form"> 
-            {this.props.text}
-        </div>    
+    static propTypes = {
+        userId: PropTypes.number,
+        avatarSrc: PropTypes.string,
+        userName: PropTypes.string,
+        // ? редактирование что должно происходить при onSubmit?
+        onSubmit: PropTypes.func
+    }
+
+
+    onCreateClick(event){
+          this.props.onSubmit(this.state.value.toString('html'))
+          this.setState( { value: RichTextEditor.createEmptyValue() })
+    }
+    
+    onChange(value){
+        this.setState(Object.assign({}, this.state, {value}));
+    }
+
+
+    render() { 
+      return(
+      <div styleName="comment comment__create">
+        <div styleName="comment__avatar">  
+          <Avatar src={this.props.avatarSrc} size={AVATAR_SIZE}> </Avatar>
+        </div>
+        <div styleName="comment__right">
+
+          <div styleName="comment__header"> 
+
+            <div styleName="comment__info">
+
+              <div styleName="comment__username">
+                {this.props.userName}
+              </div>
+      
+            </div>{/*comment__info*/}
+
+          </div>{/*comment__header*/}
+
+          <div styleName="comment__body">
+            {RichTextEditor ? (
+              <div styleName="comment__editor">
+                <RichTextEditor value={this.state.value} onChange={this.onChange.bind(this)} />
+              </div>
+            ) : (
+              <div styleName="comment__editor_server"></div>
+            )}
+            
+          </div>
+
+          <div styleName="comment__bottom-toolbar">
+                            
+                <button styleName="create__button comment__button" onClick={this.onCreateClick.bind(this)}>
+                  <FaComment /> {CREATE_TEXT }
+                </button>              
+
+          </div>{/*comment__bottom-toolbar*/}
+
+        </div>{/*comment__right*/}
+      </div>)
   }
 }

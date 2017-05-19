@@ -32,31 +32,30 @@ export default class PushMessage extends Component {
   }
 
   static propTypes = {
-    
+    user: PropTypes.shape({
+        avatar: PropTypes.string.isRequired,
+        fullName: PropTypes.string.isRequired,
+        online: PropTypes.bool.isRequired
+    }),
+    children: React.PropTypes.any
   }
   render() { 
-    //console.log(this.props)
     return (
       <div styleName="push_message">
 
         <div styleName="push_message__avatar">  
-          <Avatar src={this.props.user.avatar} title={this.props.user.fullName}>
-            {
-              this.props.user.online  
-              ?<Avatar.Badge right bottom>
-                <div style={{ width: 10, height: 10, backgroundColor: '#4CAF50', borderRadius: '50%', border: '2px solid #fff' }} />
-              </Avatar.Badge>
-              :<Avatar.Badge right bottom>
-                <div style={{ width: 10, height: 10, backgroundColor: '#F44336', borderRadius: '50%', border: '2px solid #fff' }} />
-              </Avatar.Badge>
-            }            
-          </Avatar>
+          <Avatar src={this.props.user.avatar} title={this.props.user.fullName} size={50}></Avatar>
+          
         </div>
 
         <div styleName="push_message__text">
-
+            {this.props.children}
         </div>
       </div>
     ) 
   }
 }
+
+/*<Avatar.Badge right bottom>
+              <div styleName="push_message__avatar-badge-online"></div>
+            </Avatar.Badge>            */
